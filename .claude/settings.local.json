@@ -5,7 +5,8 @@
       "Bash(npx next:*)",
       "Bash(npm run:*)",
       "Bash(echo \"Exit code: $?\")",
-      "Bash(echo \"Exit: $?\")"
+      "Bash(echo \"Exit: $?\")",
+      "Bash(echo:*)"
     ]
   }
 }

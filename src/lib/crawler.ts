@@ -42,7 +42,10 @@ export async function crawlAllSources(): Promise<CrawlResult> {
               inserted++;
             }
           } catch (err) {
-            errors.push(`Insert failed for ${article.url}: ${String(err)}`);
+            const msg = err instanceof Error
+              ? err.message
+              : JSON.stringify(err);
+            errors.push(`Insert failed for ${article.url}: ${msg}`);
           }
         }
       } catch (err) {
