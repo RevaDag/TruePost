@@ -1,10 +1,33 @@
 import Link from 'next/link';
 
 export function Header() {
+  const today = new Date().toLocaleDateString('en-US', {
+    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+  });
+
   return (
     <header className="sticky top-0 z-50" style={{ backgroundColor: 'var(--parchment)', borderBottom: '3px solid var(--ink)' }}>
       {/* Top rule */}
       <div className="rule-thick" />
+
+      {/* Masthead date bar */}
+      <div
+        className="mx-auto max-w-7xl px-4 sm:px-6 flex items-center justify-between py-1"
+        style={{ borderBottom: '1px solid var(--muted-light)' }}
+      >
+        <span
+          className="font-display"
+          style={{ fontSize: '0.5rem', letterSpacing: '0.12em', color: 'var(--muted)', fontWeight: 600 }}
+        >
+          {today}
+        </span>
+        <span
+          className="font-display"
+          style={{ fontSize: '0.5rem', letterSpacing: '0.12em', color: 'var(--muted)', fontWeight: 600 }}
+        >
+          Middle East Intelligence
+        </span>
+      </div>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         {/* Main masthead row */}

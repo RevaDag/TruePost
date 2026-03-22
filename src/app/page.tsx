@@ -56,12 +56,11 @@ function FeaturedStory({ story }: { story: Story }) {
             </div>
 
             <h2
-              className="font-display"
+              className="font-headline"
               style={{
-                fontSize: 'clamp(1.1rem, 3vw, 1.5rem)',
+                fontSize: 'clamp(1.2rem, 3vw, 1.75rem)',
                 fontWeight: 800,
                 lineHeight: 1.2,
-                letterSpacing: '0.01em',
                 color: 'var(--ink)',
               }}
             >

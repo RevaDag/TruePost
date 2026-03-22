@@ -26,27 +26,7 @@ export default async function StoryPage({
   return (
     <main className="mx-auto max-w-7xl px-4 sm:px-6 py-8">
       {/* Back link */}
-      <Link
-        href="/"
-        className="font-display inline-flex items-center gap-2 mb-8"
-        style={{
-          fontSize: '0.6rem',
-          fontWeight: 700,
-          letterSpacing: '0.14em',
-          color: 'var(--muted)',
-          textDecoration: 'none',
-          borderBottom: '1px solid transparent',
-          transition: 'color 0.15s, border-color 0.15s',
-        }}
-        onMouseEnter={(e) => {
-          (e.currentTarget as HTMLAnchorElement).style.color = 'var(--ink)';
-          (e.currentTarget as HTMLAnchorElement).style.borderBottomColor = 'var(--peach)';
-        }}
-        onMouseLeave={(e) => {
-          (e.currentTarget as HTMLAnchorElement).style.color = 'var(--muted)';
-          (e.currentTarget as HTMLAnchorElement).style.borderBottomColor = 'transparent';
-        }}
-      >
+      <Link href="/" className="nav-link inline-flex items-center gap-2 mb-8">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
           <polyline points="15 18 9 12 15 6" />
         </svg>
@@ -72,12 +52,11 @@ export default async function StoryPage({
         </div>
 
         <h1
-          className="font-display"
+          className="font-headline"
           style={{
-            fontSize: 'clamp(1.3rem, 4vw, 2.2rem)',
+            fontSize: 'clamp(1.5rem, 4vw, 2.5rem)',
             fontWeight: 800,
             lineHeight: 1.15,
-            letterSpacing: '0.01em',
             color: 'var(--ink)',
             marginBottom: '1rem',
           }}

@@ -30,13 +30,12 @@ export function StoryCard({ story }: { story: Story }) {
         )}
         <div className="flex flex-col flex-1 p-4 gap-3">
           <h2
-            className="font-display"
+            className="font-headline"
             style={{
-              fontSize: '0.8rem',
-              fontWeight: 700,
-              lineHeight: 1.35,
+              fontSize: '0.95rem',
+              fontWeight: 800,
+              lineHeight: 1.3,
               color: 'var(--ink)',
-              letterSpacing: '0.01em',
               display: '-webkit-box',
               WebkitLineClamp: 4,
               WebkitBoxOrient: 'vertical',

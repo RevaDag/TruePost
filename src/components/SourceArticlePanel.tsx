@@ -34,11 +34,11 @@ export function SourceArticlePanel({ article }: { article: Article }) {
         </div>
 
         <h3
+          className="font-headline"
           style={{
-            fontFamily: "'IBM Plex Sans', sans-serif",
-            fontSize: '0.85rem',
-            fontWeight: 600,
-            lineHeight: 1.4,
+            fontSize: '0.95rem',
+            fontWeight: 700,
+            lineHeight: 1.35,
             color: 'var(--ink)',
           }}
         >
@@ -68,7 +68,6 @@ export function SourceArticlePanel({ article }: { article: Article }) {
           rel="noopener noreferrer"
           className="brutalist-btn mt-auto"
           style={{ alignSelf: 'flex-start' }}
-          onClick={(e) => e.stopPropagation()}
         >
           Read article
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
