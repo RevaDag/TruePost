@@ -73,7 +73,7 @@ export async function getStories(limit = 50): Promise<Story[]> {
     .from('stories')
     .select(`
       *,
-      representative_article:articles(
+      representative_article:articles!stories_representative_article_id_fkey(
         *,
         source:sources(*)
       )
@@ -90,7 +90,7 @@ export async function getStoryById(id: string): Promise<Story | null> {
     .from('stories')
     .select(`
       *,
-      representative_article:articles(*),
+      representative_article:articles!stories_representative_article_id_fkey(*),
       story_articles(
         article:articles(
           *,

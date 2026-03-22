@@ -13,6 +13,7 @@ export async function GET(request: NextRequest) {
       headers: { 'Cache-Control': 's-maxage=60, stale-while-revalidate=300' },
     });
   } catch (err) {
-    return NextResponse.json({ error: String(err) }, { status: 500 });
+    const msg = err instanceof Error ? err.message : JSON.stringify(err);
+    return NextResponse.json({ error: msg }, { status: 500 });
   }
 }
