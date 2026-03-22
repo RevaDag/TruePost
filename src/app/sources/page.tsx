@@ -1,179 +1,89 @@
-import { getAllSources } from '@/lib/supabase';
+import { getAllSources } from "@/lib/supabase";
 
 export const revalidate = 3600;
 
 export default async function SourcesPage() {
   let sources: Awaited<ReturnType<typeof getAllSources>> = [];
+  try { sources = await getAllSources(); } catch {}
 
-  try {
-    sources = await getAllSources();
-  } catch {
-    // DB not configured yet
+  const english = sources.filter(s => s.language === "en");
+  const hebrew  = sources.filter(s => s.language === "he");
+
+  function SourceRow({ name, url, rssUrl, logoUrl }: {
+    name: string; url: string; rssUrl: string | null; logoUrl: string | null;
+  }) {
+    return (
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between",
+        padding: "0.875rem 1.25rem", borderBottom: "1px solid var(--border)" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          {logoUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={logoUrl} alt={name} width={18} height={18} style={{ objectFit: "contain", opacity: 0.85 }} />
+          ) : (
+            <div style={{ width: 18, height: 18, background: "var(--surface-3)",
+              border: "1px solid var(--border-2)", borderRadius: 2,
+              display: "flex", alignItems: "center", justifyContent: "center",
+              fontFamily: "Outfit, sans-serif", fontSize: "0.5rem", fontWeight: 600,
+              color: "var(--text-3)", textTransform: "uppercase" }}>
+              {name[0]}
+            </div>
+          )}
+          <span style={{ fontFamily: "Outfit, sans-serif", fontSize: "0.85rem", fontWeight: 500, color: "var(--text-1)" }}>
+            {name}
+          </span>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <span style={{ fontFamily: "Outfit, sans-serif", fontSize: "0.55rem", fontWeight: 600,
+            letterSpacing: "0.08em", textTransform: "uppercase", padding: "2px 7px", borderRadius: 2,
+            background: rssUrl ? "rgba(212,168,67,0.12)" : "var(--surface-3)",
+            color: rssUrl ? "var(--amber)" : "var(--text-3)",
+            border: rssUrl ? "1px solid rgba(212,168,67,0.3)" : "1px solid var(--border)" }}>
+            {rssUrl ? "RSS" : "Scrape"}
+          </span>
+          <a href={url} target="_blank" rel="noopener noreferrer" className="read-btn">
+            Visit
+            <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+              <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    );
   }
 
-  const english = sources.filter((s) => s.language === 'en');
-  const hebrew  = sources.filter((s) => s.language === 'he');
-
-  const SourceRow = ({ name, url, rssUrl, logoUrl }: {
-    name: string;
-    url: string;
-    rssUrl: string | null;
-    logoUrl: string | null;
-  }) => (
-    <div
-      className="flex items-center justify-between p-4 animate-fade-up"
-      style={{ borderBottom: '1px solid var(--ink)' }}
-    >
-      <div className="flex items-center gap-3">
-        {logoUrl ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={logoUrl}
-            alt={name}
-            width={20}
-            height={20}
-            style={{
-              objectFit: 'contain',
-              filter: 'grayscale(100%)',
-              border: '1px solid var(--ink)',
-              padding: '2px',
-              backgroundColor: 'var(--parchment-alt)',
-            }}
-          />
-        ) : (
-          <div
-            style={{
-              width: 20,
-              height: 20,
-              border: '1px solid var(--ink)',
-              backgroundColor: 'var(--parchment-dark)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontFamily: 'Syne, sans-serif',
-              fontSize: '0.45rem',
-              fontWeight: 700,
-              textTransform: 'uppercase',
-            }}
-          >
-            {name[0]}
-          </div>
-        )}
-        <span
-          className="font-display"
-          style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.06em' }}
-        >
-          {name}
-        </span>
-      </div>
-
-      <div className="flex items-center gap-3">
-        <span
-          className="font-display"
-          style={{
-            fontSize: '0.5rem',
-            fontWeight: 600,
-            letterSpacing: '0.1em',
-            padding: '0.15rem 0.4rem',
-            border: '1px solid var(--ink)',
-            backgroundColor: rssUrl ? 'var(--yellow)' : 'var(--parchment-alt)',
-          }}
-        >
-          {rssUrl ? 'RSS' : 'Scrape'}
-        </span>
-        <a
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="brutalist-btn"
-          style={{ padding: '0.3rem 0.75rem', fontSize: '0.55rem' }}
-        >
-          Visit →
-        </a>
-      </div>
-    </div>
-  );
-
   return (
-    <main className="mx-auto max-w-4xl px-4 sm:px-6 py-8">
-      {/* Page header */}
-      <div
-        className="pb-4 mb-8"
-        style={{ borderBottom: '3px solid var(--ink)' }}
-      >
-        <h1
-          className="font-display animate-fade-up"
-          style={{
-            fontSize: 'clamp(1.5rem, 4vw, 2.2rem)',
-            fontWeight: 800,
-            letterSpacing: '0.01em',
-            lineHeight: 1,
-            marginBottom: '0.5rem',
-          }}
-        >
+    <main className="mx-auto max-w-4xl px-4 sm:px-6 py-6">
+      <div style={{ paddingBottom: "1.5rem", marginBottom: "2rem", borderBottom: "1px solid var(--border-2)" }}>
+        <h1 className="font-serif animate-in" style={{ fontSize: "2rem", fontWeight: 400, color: "var(--text-1)", lineHeight: 1 }}>
           News Sources
         </h1>
-        <p
-          style={{
-            fontFamily: "'IBM Plex Sans', sans-serif",
-            fontSize: '0.8rem',
-            color: 'var(--muted)',
-          }}
-        >
+        <p style={{ fontFamily: "Outfit, sans-serif", fontSize: "0.78rem", color: "var(--text-3)", marginTop: 6 }}>
           {sources.length} sources tracked — crawled every 30 minutes
         </p>
       </div>
 
       {sources.length === 0 && (
-        <p
-          style={{
-            fontFamily: "'IBM Plex Sans', sans-serif",
-            fontSize: '0.85rem',
-            color: 'var(--muted)',
-          }}
-        >
+        <p style={{ fontFamily: "Outfit, sans-serif", fontSize: "0.85rem", color: "var(--text-3)" }}>
           Configure your Supabase environment variables to see sources.
         </p>
       )}
 
       {english.length > 0 && (
-        <section className="mb-10">
-          <div className="flex items-center gap-4 mb-1">
-            <h2
-              className="font-display"
-              style={{
-                fontSize: '0.6rem',
-                fontWeight: 700,
-                letterSpacing: '0.2em',
-                color: 'var(--muted)',
-              }}
-            >
+        <section style={{ marginBottom: "2.5rem" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: "0.75rem" }}>
+            <span style={{ fontFamily: "Outfit, sans-serif", fontSize: "0.6rem", fontWeight: 600,
+              letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--text-3)" }}>
               English Sources
-            </h2>
-            <div
-              style={{
-                fontFamily: "'Syne', sans-serif",
-                fontSize: '0.5rem',
-                fontWeight: 600,
-                textTransform: 'uppercase',
-                letterSpacing: '0.1em',
-                padding: '0.1rem 0.4rem',
-                border: '1px solid var(--muted-light)',
-                color: 'var(--muted)',
-              }}
-            >
+            </span>
+            <span className="font-mono" style={{ fontSize: "0.6rem", color: "var(--text-3)",
+              padding: "1px 6px", border: "1px solid var(--border)", borderRadius: 2 }}>
               {english.length}
-            </div>
+            </span>
           </div>
-          <div style={{ border: '2px solid var(--ink)', boxShadow: '4px 4px 0px var(--ink)' }}>
-            {english.map((source) => (
-              <SourceRow
-                key={source.id}
-                name={source.name}
-                url={source.url}
-                rssUrl={source.rss_url}
-                logoUrl={source.logo_url}
-              />
+          <div style={{ border: "1px solid var(--border-2)", borderRadius: 2, overflow: "hidden", background: "var(--surface)" }}>
+            {english.map(s => (
+              <SourceRow key={s.id} name={s.name} url={s.url} rssUrl={s.rss_url} logoUrl={s.logo_url} />
             ))}
           </div>
         </section>
@@ -181,42 +91,19 @@ export default async function SourcesPage() {
 
       {hebrew.length > 0 && (
         <section>
-          <div className="flex items-center gap-4 mb-1">
-            <h2
-              className="font-display"
-              style={{
-                fontSize: '0.6rem',
-                fontWeight: 700,
-                letterSpacing: '0.2em',
-                color: 'var(--muted)',
-              }}
-            >
+          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: "0.75rem" }}>
+            <span style={{ fontFamily: "Outfit, sans-serif", fontSize: "0.6rem", fontWeight: 600,
+              letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--text-3)" }}>
               Hebrew Sources
-            </h2>
-            <div
-              style={{
-                fontFamily: "'Syne', sans-serif",
-                fontSize: '0.5rem',
-                fontWeight: 600,
-                textTransform: 'uppercase',
-                letterSpacing: '0.1em',
-                padding: '0.1rem 0.4rem',
-                border: '1px solid var(--muted-light)',
-                color: 'var(--muted)',
-              }}
-            >
+            </span>
+            <span className="font-mono" style={{ fontSize: "0.6rem", color: "var(--text-3)",
+              padding: "1px 6px", border: "1px solid var(--border)", borderRadius: 2 }}>
               {hebrew.length}
-            </div>
+            </span>
           </div>
-          <div style={{ border: '2px solid var(--ink)', boxShadow: '4px 4px 0px var(--ink)' }}>
-            {hebrew.map((source) => (
-              <SourceRow
-                key={source.id}
-                name={source.name}
-                url={source.url}
-                rssUrl={source.rss_url}
-                logoUrl={source.logo_url}
-              />
+          <div style={{ border: "1px solid var(--border-2)", borderRadius: 2, overflow: "hidden", background: "var(--surface)" }}>
+            {hebrew.map(s => (
+              <SourceRow key={s.id} name={s.name} url={s.url} rssUrl={s.rss_url} logoUrl={s.logo_url} />
             ))}
           </div>
         </section>

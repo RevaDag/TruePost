@@ -1,108 +1,50 @@
-import { getStories } from '@/lib/supabase';
-import { StoryCard } from '@/components/StoryCard';
-import { ConsensusBadge } from '@/components/ConsensusBadge';
-import { SourceBadge } from '@/components/SourceBadge';
-import Link from 'next/link';
-import { formatDistanceToNow } from 'date-fns';
-import type { Story } from '@/lib/types';
+import { getStories } from "@/lib/supabase";
+import { StoryCard } from "@/components/StoryCard";
+import { ConsensusBadge } from "@/components/ConsensusBadge";
+import { SourceBadge } from "@/components/SourceBadge";
+import Link from "next/link";
+import { formatDistanceToNow } from "date-fns";
+import type { Story } from "@/lib/types";
 
 export const revalidate = 60;
 
 function FeaturedStory({ story }: { story: Story }) {
   const sources = (story.articles ?? [])
-    .map((a) => a.source)
+    .map(a => a.source)
     .filter((s): s is NonNullable<typeof s> => !!s)
-    .filter((s, i, arr) => arr.findIndex((x) => x.id === s.id) === i);
-
+    .filter((s, i, arr) => arr.findIndex(x => x.id === s.id) === i);
   const timeAgo = story.updated_at
-    ? formatDistanceToNow(new Date(story.updated_at), { addSuffix: true })
-    : '';
-
+    ? formatDistanceToNow(new Date(story.updated_at), { addSuffix: true }) : "";
   const imageUrl = story.representative_article?.image_url;
 
   return (
-    <Link
-      href={`/story/${story.id}`}
-      className="block animate-fade-up"
-      style={{ textDecoration: 'none' }}
-    >
+    <Link href={"story/" + story.id} className="block animate-in" style={{ textDecoration: "none" }}>
       <article className="featured-card">
-        <div className="flex flex-col md:flex-row">
-          {imageUrl && (
-            <div style={{ flexShrink: 0, width: '100%', maxWidth: '20rem' }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={imageUrl}
-                alt=""
-                className="bw-image"
-                style={{ height: '100%', minHeight: '14rem', borderBottom: 'none', borderRight: '3px solid var(--ink)' }}
-              />
+        {imageUrl && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={imageUrl} alt=""
+            style={{ width: "100%", height: "clamp(14rem,30vw,22rem)", objectFit: "cover", display: "block", borderBottom: "1px solid var(--border-2)" }}
+          />
+        )}
+        <div style={{ padding: "1.5rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+            <ConsensusBadge sourceCount={story.source_count} />
+            <span style={{ fontFamily: "Outfit, sans-serif", fontSize: "0.6rem", fontWeight: 600,
+              letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--amber)" }}>
+              Top Story
+            </span>
+            <span className="font-mono" style={{ fontSize: "0.6rem", color: "var(--text-3)", marginLeft: "auto" }}>{timeAgo}</span>
+          </div>
+          <h2 className="font-serif"
+            style={{ fontSize: "clamp(1.4rem,3.5vw,2rem)", fontWeight: 400, lineHeight: 1.2, color: "var(--text-1)" }}>
+            {story.title}
+          </h2>
+          {sources.length > 0 && (
+            <div className="divide-2" style={{ paddingTop: "1rem", display: "flex", flexWrap: "wrap", gap: "5px" }}>
+              {sources.slice(0, 6).map(s => <SourceBadge key={s.id} source={s} />)}
+              {sources.length > 6 && <span className="source-chip">+{sources.length - 6}</span>}
             </div>
           )}
-          <div className="flex flex-col flex-1 p-6 gap-4">
-            <div className="flex items-center gap-3 flex-wrap">
-              <ConsensusBadge sourceCount={story.source_count} />
-              <span
-                className="font-display"
-                style={{
-                  fontSize: '0.55rem',
-                  fontWeight: 600,
-                  letterSpacing: '0.14em',
-                  color: 'var(--muted)',
-                }}
-              >
-                Top Story
-              </span>
-            </div>
-
-            <h2
-              className="font-headline"
-              style={{
-                fontSize: 'clamp(1.2rem, 3vw, 1.75rem)',
-                fontWeight: 800,
-                lineHeight: 1.2,
-                color: 'var(--ink)',
-              }}
-            >
-              {story.title}
-            </h2>
-
-            <div
-              className="flex items-center gap-4 pt-3 flex-wrap"
-              style={{ borderTop: '1px solid var(--ink)', marginTop: 'auto' }}
-            >
-              <div className="flex flex-wrap gap-1.5">
-                {sources.slice(0, 5).map((source) => (
-                  <SourceBadge key={source.id} source={source} />
-                ))}
-                {sources.length > 5 && (
-                  <span
-                    style={{
-                      fontFamily: "'Syne', sans-serif",
-                      fontSize: '0.5rem',
-                      fontWeight: 600,
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.06em',
-                      color: 'var(--muted)',
-                      alignSelf: 'center',
-                    }}
-                  >
-                    +{sources.length - 5}
-                  </span>
-                )}
-              </div>
-              <span
-                style={{
-                  fontFamily: "'IBM Plex Sans', sans-serif",
-                  fontSize: '0.65rem',
-                  color: 'var(--muted)',
-                  marginLeft: 'auto',
-                }}
-              >
-                {timeAgo}
-              </span>
-            </div>
-          </div>
         </div>
       </article>
     </Link>
@@ -111,97 +53,50 @@ function FeaturedStory({ story }: { story: Story }) {
 
 export default async function HomePage() {
   let stories: Awaited<ReturnType<typeof getStories>> = [];
-
-  try {
-    stories = await getStories(50);
-  } catch {
-    // DB not configured yet — show empty state
-  }
+  try { stories = await getStories(50); } catch {}
 
   const featured = stories[0];
   const rest = stories.slice(1);
 
   return (
-    <main className="mx-auto max-w-7xl px-4 sm:px-6 py-8" style={{ minHeight: '80vh' }}>
-      {/* Briefing header */}
-      <div
-        className="flex items-baseline justify-between pb-3 mb-6"
-        style={{ borderBottom: '3px solid var(--ink)' }}
-      >
-        <h1
-          className="font-display"
-          style={{ fontSize: 'clamp(0.7rem, 2vw, 0.85rem)', fontWeight: 700, letterSpacing: '0.16em' }}
-        >
-          Today&apos;s Briefing
-        </h1>
-        <span
-          style={{
-            fontFamily: "'IBM Plex Sans', sans-serif",
-            fontSize: '0.65rem',
-            color: 'var(--muted)',
-            letterSpacing: '0.04em',
-          }}
-        >
-          {stories.length} {stories.length === 1 ? 'story' : 'stories'} · ranked by source consensus
+    <main className="mx-auto max-w-7xl px-4 sm:px-6 py-6" style={{ minHeight: "80vh" }}>
+      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between",
+        paddingBottom: "1rem", marginBottom: "1.5rem", borderBottom: "1px solid var(--border-2)" }}>
+        <div>
+          <h1 className="font-serif" style={{ fontSize: "1.6rem", fontWeight: 400, color: "var(--text-1)", lineHeight: 1 }}>
+            Latest Stories
+          </h1>
+          <p style={{ fontFamily: "Outfit, sans-serif", fontSize: "0.72rem", color: "var(--text-3)", marginTop: 4 }}>
+            Ranked by independent source count
+          </p>
+        </div>
+        <span className="font-mono" style={{ fontSize: "0.65rem", color: "var(--text-3)" }}>
+          {stories.length} {stories.length === 1 ? "story" : "stories"}
         </span>
       </div>
 
       {stories.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-28 text-center gap-6">
-          <div
-            className="font-display"
-            style={{
-              fontSize: '3rem',
-              fontWeight: 800,
-              letterSpacing: '-0.02em',
-              color: 'var(--parchment-dark)',
-            }}
-          >
-            No Stories Yet
-          </div>
-          <p
-            style={{
-              fontFamily: "'IBM Plex Sans', sans-serif",
-              fontSize: '0.85rem',
-              color: 'var(--muted)',
-              maxWidth: '28rem',
-              lineHeight: 1.6,
-            }}
-          >
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center",
+          justifyContent: "center", gap: "1rem", paddingTop: "6rem", textAlign: "center" }}>
+          <h2 className="font-serif" style={{ fontSize: "1.5rem", color: "var(--text-2)" }}>No stories yet</h2>
+          <p style={{ fontFamily: "Outfit, sans-serif", fontSize: "0.85rem", color: "var(--text-3)", maxWidth: "28rem" }}>
             Trigger the first crawl to start collecting articles from all sources.
           </p>
-          <a href="/api/cron/crawl" className="brutalist-btn" style={{ fontSize: '0.65rem' }}>
+          <a href="/api/cron/crawl" style={{ fontFamily: "Outfit, sans-serif", fontSize: "0.7rem", fontWeight: 500,
+            letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--amber)",
+            border: "1px solid var(--amber)", borderRadius: 2, padding: "6px 16px", textDecoration: "none" }}>
             Run First Crawl
           </a>
         </div>
       ) : (
-        <div className="flex flex-col gap-8">
-          {/* Featured story */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
           {featured && <FeaturedStory story={featured} />}
-
-          {/* Divider with label */}
           {rest.length > 0 && (
-            <div className="flex items-center gap-4">
-              <div className="rule-thin flex-1" />
-              <span
-                className="font-display"
-                style={{ fontSize: '0.55rem', fontWeight: 700, letterSpacing: '0.16em', color: 'var(--muted)', flexShrink: 0 }}
-              >
-                More Stories
-              </span>
-              <div className="rule-thin flex-1" />
+            <div className="story-grid"
+              style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(270px, 1fr))", gap: "1rem" }}>
+              {rest.map(story => <StoryCard key={story.id} story={story} />)}
             </div>
           )}
-
-          {/* Story grid */}
-          <div
-            className="story-grid grid gap-6"
-            style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))' }}
-          >
-            {rest.map((story) => (
-              <StoryCard key={story.id} story={story} />
-            ))}
-          </div>
         </div>
       )}
     </main>

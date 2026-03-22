@@ -1,32 +1,19 @@
-import { getConsensusLevel } from '@/lib/types';
+import { getConsensusLevel } from "@/lib/types";
 
-const levelMap = {
-  established: { cls: 'lvl-established', dot: '#FFFFFF', label: 'Established' },
-  confirmed:   { cls: 'lvl-confirmed',   dot: '#000000', label: 'Confirmed' },
-  reported:    { cls: 'lvl-reported',    dot: '#000000', label: 'Reported' },
-  unverified:  { cls: 'lvl-unverified',  dot: '#7A7570', label: 'Unverified' },
+const cfg = {
+  established: { cls: "cbadge-established", dot: "var(--c-established)", label: "Established" },
+  confirmed:   { cls: "cbadge-confirmed",   dot: "var(--c-confirmed)",   label: "Confirmed" },
+  reported:    { cls: "cbadge-reported",     dot: "var(--c-reported)",    label: "Reported" },
+  unverified:  { cls: "cbadge-unverified",   dot: "var(--text-3)",        label: "Unverified" },
 };
 
 export function ConsensusBadge({ sourceCount }: { sourceCount: number }) {
   const level = getConsensusLevel(sourceCount);
-  const { cls, dot, label } = levelMap[level];
-
+  const { cls, dot, label } = cfg[level];
   return (
-    <span className={`consensus-badge ${cls}`}>
-      <span
-        style={{
-          display: 'inline-block',
-          width: 5,
-          height: 5,
-          borderRadius: '50%',
-          backgroundColor: dot,
-          flexShrink: 0,
-        }}
-      />
-      {label}
-      {sourceCount > 1 && (
-        <span style={{ opacity: 0.7, fontWeight: 500 }}>· {sourceCount}</span>
-      )}
+    <span className={`cbadge ${cls}`}>
+      <span style={{ width: 5, height: 5, borderRadius: "50%", background: dot, flexShrink: 0, display: "inline-block" }} />
+      {label}{sourceCount > 1 && <span style={{ opacity: 0.65 }}>· {sourceCount}</span>}
     </span>
   );
 }

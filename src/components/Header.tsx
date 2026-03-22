@@ -1,78 +1,25 @@
-import Link from 'next/link';
+import Link from "next/link";
 
 export function Header() {
-  const today = new Date().toLocaleDateString('en-US', {
-    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
-  });
-
   return (
-    <header className="sticky top-0 z-50" style={{ backgroundColor: 'var(--parchment)', borderBottom: '3px solid var(--ink)' }}>
-      {/* Top rule */}
-      <div className="rule-thick" />
-
-      {/* Masthead date bar */}
-      <div
-        className="mx-auto max-w-7xl px-4 sm:px-6 flex items-center justify-between py-1"
-        style={{ borderBottom: '1px solid var(--muted-light)' }}
-      >
-        <span
-          className="font-display"
-          style={{ fontSize: '0.5rem', letterSpacing: '0.12em', color: 'var(--muted)', fontWeight: 600 }}
-        >
-          {today}
-        </span>
-        <span
-          className="font-display"
-          style={{ fontSize: '0.5rem', letterSpacing: '0.12em', color: 'var(--muted)', fontWeight: 600 }}
-        >
-          Middle East Intelligence
-        </span>
+    <header
+      className="sticky top-0 z-50"
+      style={{ background: "rgba(12,12,16,0.92)", borderBottom: "1px solid var(--border-2)", backdropFilter: "blur(12px)" }}
+    >
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 flex items-center justify-between" style={{ height: 52 }}>
+        <Link href="/" style={{ textDecoration: "none", display: "flex", alignItems: "baseline", gap: 10 }}>
+          <span className="font-serif" style={{ fontSize: "1.25rem", color: "var(--text-1)", letterSpacing: "-0.01em" }}>
+            TruePost
+          </span>
+          <span className="font-mono hidden sm:inline" style={{ fontSize: "0.55rem", color: "var(--amber)", letterSpacing: "0.1em", textTransform: "uppercase" }}>
+            Middle East Intelligence
+          </span>
+        </Link>
+        <nav style={{ display: "flex", gap: 24 }}>
+          <Link href="/" style={{ fontFamily: "Outfit, sans-serif", fontSize: "0.7rem", fontWeight: 500, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--text-2)", textDecoration: "none" }}>Feed</Link>
+          <Link href="/sources" style={{ fontFamily: "Outfit, sans-serif", fontSize: "0.7rem", fontWeight: 500, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--text-2)", textDecoration: "none" }}>Sources</Link>
+        </nav>
       </div>
-
-      <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        {/* Main masthead row */}
-        <div className="flex items-center justify-between py-3 gap-4">
-          {/* Logo */}
-          <Link href="/" className="flex items-baseline gap-3 group" style={{ textDecoration: 'none' }}>
-            <span
-              className="font-display"
-              style={{
-                fontSize: 'clamp(1.4rem, 4vw, 2rem)',
-                fontWeight: 800,
-                letterSpacing: '-0.01em',
-                color: 'var(--ink)',
-                lineHeight: 1,
-              }}
-            >
-              True<span className="highlight-peach">Post</span>
-            </span>
-            <span
-              className="hidden sm:block font-display"
-              style={{
-                fontSize: '0.55rem',
-                fontWeight: 600,
-                letterSpacing: '0.16em',
-                color: 'var(--muted)',
-                borderLeft: '1px solid var(--muted-light)',
-                paddingLeft: '0.75rem',
-                lineHeight: 1.3,
-              }}
-            >
-              Israeli &amp; Middle East<br />
-              News Intelligence
-            </span>
-          </Link>
-
-          {/* Navigation */}
-          <nav className="flex items-center gap-5" aria-label="Main navigation">
-            <Link href="/" className="nav-link">Feed</Link>
-            <Link href="/sources" className="nav-link">Sources</Link>
-          </nav>
-        </div>
-      </div>
-
-      {/* Bottom rule */}
-      <div className="rule-thin" />
     </header>
   );
 }
