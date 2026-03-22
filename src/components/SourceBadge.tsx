@@ -1,3 +1,5 @@
+'use client';
+
 import type { Source } from '@/lib/types';
 
 export function SourceBadge({ source }: { source: Source }) {

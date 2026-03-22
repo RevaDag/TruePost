@@ -39,9 +39,6 @@ export default async function SourcesPage() {
               padding: '2px',
               backgroundColor: 'var(--parchment-alt)',
             }}
-            onError={(e) => {
-              (e.target as HTMLImageElement).style.display = 'none';
-            }}
           />
         ) : (
           <div
