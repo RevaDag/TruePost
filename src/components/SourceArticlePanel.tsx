@@ -8,27 +8,56 @@ export function SourceArticlePanel({ article }: { article: Article }) {
     : '';
 
   return (
-    <article className="flex flex-col rounded-xl border border-gray-800 bg-gray-900 overflow-hidden">
+    <article className="article-panel">
       {article.image_url && (
         // eslint-disable-next-line @next/next/no-img-element
         <img
           src={article.image_url}
           alt=""
-          className="h-36 w-full object-cover"
+          className="bw-image"
+          style={{ height: '8.5rem' }}
         />
       )}
       <div className="flex flex-col flex-1 p-4 gap-3">
         <div className="flex items-center justify-between gap-2">
           {article.source && <SourceBadge source={article.source} />}
-          <span className="text-xs text-gray-500 shrink-0">{timeAgo}</span>
+          <span
+            style={{
+              fontFamily: "'IBM Plex Sans', sans-serif",
+              fontSize: '0.6rem',
+              color: 'var(--muted)',
+              flexShrink: 0,
+            }}
+          >
+            {timeAgo}
+          </span>
         </div>
 
-        <h3 className="text-sm font-semibold leading-snug text-gray-100">
+        <h3
+          style={{
+            fontFamily: "'IBM Plex Sans', sans-serif",
+            fontSize: '0.85rem',
+            fontWeight: 600,
+            lineHeight: 1.4,
+            color: 'var(--ink)',
+          }}
+        >
           {article.title}
         </h3>
 
         {article.content && (
-          <p className="text-xs text-gray-400 line-clamp-5">
+          <p
+            style={{
+              fontFamily: "'IBM Plex Sans', sans-serif",
+              fontSize: '0.75rem',
+              lineHeight: 1.55,
+              color: 'var(--muted)',
+              display: '-webkit-box',
+              WebkitLineClamp: 4,
+              WebkitBoxOrient: 'vertical',
+              overflow: 'hidden',
+            }}
+          >
             {article.content}
           </p>
         )}
@@ -37,11 +66,15 @@ export function SourceArticlePanel({ article }: { article: Article }) {
           href={article.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-auto inline-flex items-center gap-1 text-xs text-blue-400 hover:text-blue-300 hover:underline"
+          className="brutalist-btn mt-auto"
+          style={{ alignSelf: 'flex-start' }}
+          onClick={(e) => e.stopPropagation()}
         >
-          Read full article
-          <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          Read article
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+            <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
+            <polyline points="15 3 21 3 21 9" />
+            <line x1="10" y1="14" x2="21" y2="3" />
           </svg>
         </a>
       </div>

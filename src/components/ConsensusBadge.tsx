@@ -1,20 +1,32 @@
-import { getConsensusLevel, getConsensusLabel } from '@/lib/types';
+import { getConsensusLevel } from '@/lib/types';
 
-const styles: Record<string, string> = {
-  unverified:  'bg-gray-800 text-gray-400 border border-gray-700',
-  reported:    'bg-yellow-950 text-yellow-400 border border-yellow-800',
-  confirmed:   'bg-green-950 text-green-400 border border-green-800',
-  established: 'bg-blue-950 text-blue-400 border border-blue-800',
+const levelMap = {
+  established: { cls: 'lvl-established', dot: '#FFFFFF', label: 'Established' },
+  confirmed:   { cls: 'lvl-confirmed',   dot: '#000000', label: 'Confirmed' },
+  reported:    { cls: 'lvl-reported',    dot: '#000000', label: 'Reported' },
+  unverified:  { cls: 'lvl-unverified',  dot: '#7A7570', label: 'Unverified' },
 };
 
 export function ConsensusBadge({ sourceCount }: { sourceCount: number }) {
   const level = getConsensusLevel(sourceCount);
-  const label = getConsensusLabel(sourceCount);
+  const { cls, dot, label } = levelMap[level];
 
   return (
-    <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium ${styles[level]}`}>
-      <span className="h-1.5 w-1.5 rounded-full bg-current" />
+    <span className={`consensus-badge ${cls}`}>
+      <span
+        style={{
+          display: 'inline-block',
+          width: 5,
+          height: 5,
+          borderRadius: '50%',
+          backgroundColor: dot,
+          flexShrink: 0,
+        }}
+      />
       {label}
+      {sourceCount > 1 && (
+        <span style={{ opacity: 0.7, fontWeight: 500 }}>· {sourceCount}</span>
+      )}
     </span>
   );
 }
