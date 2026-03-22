@@ -30,7 +30,7 @@ export function CrawlButton() {
         cursor: loading ? "not-allowed" : "pointer", transition: "all 0.15s",
       }}
     >
-      {loading ? "Crawling…" : "Run First Crawl"}
+      {loading ? "מבצע סריקה…" : "הפעל סריקה ראשונה"}
     </button>
   );
 }

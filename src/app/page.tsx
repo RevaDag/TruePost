@@ -30,14 +30,14 @@ function FeaturedStory({ story }: { story: Story }) {
         <div style={{ padding: "1.5rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
             <ConsensusBadge sourceCount={story.source_count} />
-            <span style={{ fontFamily: "Outfit, sans-serif", fontSize: "0.6rem", fontWeight: 600,
-              letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--amber)" }}>
-              Top Story
+            <span style={{ fontFamily: "Outfit, sans-serif", fontSize: "0.65rem", fontWeight: 600,
+              letterSpacing: "0.04em", color: "var(--amber)" }}>
+              סיפור ראשי
             </span>
-            <span className="font-mono" style={{ fontSize: "0.6rem", color: "var(--text-3)", marginLeft: "auto" }}>{timeAgo}</span>
+            <span className="font-mono" style={{ fontSize: "0.6rem", color: "var(--text-3)", marginInlineStart: "auto" }}>{timeAgo}</span>
           </div>
           <h2 className="font-serif"
-            style={{ fontSize: "clamp(1.4rem,3.5vw,2rem)", fontWeight: 400, lineHeight: 1.2, color: "var(--text-1)" }}>
+            style={{ fontSize: "clamp(1.4rem,3.5vw,2rem)", fontWeight: 400, lineHeight: 1.3, color: "var(--text-1)" }}>
             {story.title}
           </h2>
           {sources.length > 0 && (
@@ -65,23 +65,23 @@ export default async function HomePage() {
         paddingBottom: "1rem", marginBottom: "1.5rem", borderBottom: "1px solid var(--border-2)" }}>
         <div>
           <h1 className="font-serif" style={{ fontSize: "1.6rem", fontWeight: 400, color: "var(--text-1)", lineHeight: 1 }}>
-            Latest Stories
+            הסיפורים האחרונים
           </h1>
           <p style={{ fontFamily: "Outfit, sans-serif", fontSize: "0.72rem", color: "var(--text-3)", marginTop: 4 }}>
-            Ranked by independent source count
+            מדורג לפי מספר מקורות עצמאיים
           </p>
         </div>
         <span className="font-mono" style={{ fontSize: "0.65rem", color: "var(--text-3)" }}>
-          {stories.length} {stories.length === 1 ? "story" : "stories"}
+          {stories.length} {stories.length === 1 ? "סיפור" : "סיפורים"}
         </span>
       </div>
 
       {stories.length === 0 ? (
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center",
           justifyContent: "center", gap: "1rem", paddingTop: "6rem", textAlign: "center" }}>
-          <h2 className="font-serif" style={{ fontSize: "1.5rem", color: "var(--text-2)" }}>No stories yet</h2>
+          <h2 className="font-serif" style={{ fontSize: "1.5rem", color: "var(--text-2)" }}>אין סיפורים עדיין</h2>
           <p style={{ fontFamily: "Outfit, sans-serif", fontSize: "0.85rem", color: "var(--text-3)", maxWidth: "28rem" }}>
-            Trigger the first crawl to start collecting articles from all sources.
+            הפעל סריקה ראשונה כדי להתחיל לאסוף כתבות מכל המקורות.
           </p>
           <CrawlButton />
         </div>

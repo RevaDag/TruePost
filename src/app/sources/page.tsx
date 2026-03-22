@@ -41,7 +41,7 @@ export default async function SourcesPage() {
             {rssUrl ? "RSS" : "Scrape"}
           </span>
           <a href={url} target="_blank" rel="noopener noreferrer" className="read-btn">
-            Visit
+            בקר באתר
             <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
               <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
@@ -56,16 +56,16 @@ export default async function SourcesPage() {
     <main className="mx-auto max-w-4xl px-4 sm:px-6 py-6">
       <div style={{ paddingBottom: "1.5rem", marginBottom: "2rem", borderBottom: "1px solid var(--border-2)" }}>
         <h1 className="font-serif animate-in" style={{ fontSize: "2rem", fontWeight: 400, color: "var(--text-1)", lineHeight: 1 }}>
-          News Sources
+          מקורות חדשות
         </h1>
         <p style={{ fontFamily: "Outfit, sans-serif", fontSize: "0.78rem", color: "var(--text-3)", marginTop: 6 }}>
-          {sources.length} sources tracked — crawled every 30 minutes
+          {sources.length} מקורות במעקב — סריקה כל 30 דקות
         </p>
       </div>
 
       {sources.length === 0 && (
         <p style={{ fontFamily: "Outfit, sans-serif", fontSize: "0.85rem", color: "var(--text-3)" }}>
-          Configure your Supabase environment variables to see sources.
+          הגדר את משתני הסביבה של Supabase כדי לראות מקורות.
         </p>
       )}
 
@@ -74,7 +74,7 @@ export default async function SourcesPage() {
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: "0.75rem" }}>
             <span style={{ fontFamily: "Outfit, sans-serif", fontSize: "0.6rem", fontWeight: 600,
               letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--text-3)" }}>
-              English Sources
+              מקורות באנגלית
             </span>
             <span className="font-mono" style={{ fontSize: "0.6rem", color: "var(--text-3)",
               padding: "1px 6px", border: "1px solid var(--border)", borderRadius: 2 }}>
@@ -94,7 +94,7 @@ export default async function SourcesPage() {
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: "0.75rem" }}>
             <span style={{ fontFamily: "Outfit, sans-serif", fontSize: "0.6rem", fontWeight: 600,
               letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--text-3)" }}>
-              Hebrew Sources
+              מקורות בעברית
             </span>
             <span className="font-mono" style={{ fontSize: "0.6rem", color: "var(--text-3)",
               padding: "1px 6px", border: "1px solid var(--border)", borderRadius: 2 }}>

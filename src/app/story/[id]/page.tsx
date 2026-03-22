@@ -22,10 +22,10 @@ export default async function StoryPage({ params }: { params: Promise<{ id: stri
         fontFamily: "Outfit, sans-serif", fontSize: "0.65rem", fontWeight: 500,
         letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--text-3)",
         textDecoration: "none", marginBottom: "2rem" }}>
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ transform: "scaleX(-1)" }}>
           <polyline points="15 18 9 12 15 6"/>
         </svg>
-        Back
+        חזרה לעדכון
       </Link>
 
       <div className="animate-in" style={{ marginBottom: "2.5rem", paddingBottom: "2rem", borderBottom: "1px solid var(--border-2)" }}>
@@ -39,26 +39,26 @@ export default async function StoryPage({ params }: { params: Promise<{ id: stri
           {story.title}
         </h1>
         <p style={{ fontFamily: "Outfit, sans-serif", fontSize: "0.82rem", color: "var(--text-3)" }}>
-          Independently reported by{" "}
+          דווח בנפרד על ידי{" "}
           <strong style={{ color: "var(--text-2)" }}>{story.source_count}</strong>{" "}
-          {story.source_count === 1 ? "source" : "sources"}
+          {story.source_count === 1 ? "מקור" : "מקורות"}
         </p>
       </div>
 
       <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: "1.25rem" }}>
         <span style={{ fontFamily: "Outfit, sans-serif", fontSize: "0.65rem", fontWeight: 600,
           letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-3)" }}>
-          Coverage
+          כיסוי
         </span>
         <span className="font-mono" style={{ fontSize: "0.6rem", color: "var(--text-3)" }}>
-          {articles.length} {articles.length === 1 ? "article" : "articles"}
+          {articles.length} {articles.length === 1 ? "כתבה" : "כתבות"}
         </span>
         <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
       </div>
 
       {articles.length === 0 ? (
         <p style={{ fontFamily: "Outfit, sans-serif", fontSize: "0.85rem", color: "var(--text-3)" }}>
-          No articles found for this story.
+          לא נמצאו כתבות לסיפור זה.
         </p>
       ) : (
         <div className="story-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "1rem" }}>

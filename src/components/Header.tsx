@@ -11,13 +11,13 @@ export function Header() {
           <span className="font-serif" style={{ fontSize: "1.25rem", color: "var(--text-1)", letterSpacing: "-0.01em" }}>
             TruePost
           </span>
-          <span className="font-mono hidden sm:inline" style={{ fontSize: "0.55rem", color: "var(--amber)", letterSpacing: "0.1em", textTransform: "uppercase" }}>
-            Middle East Intelligence
+          <span className="font-mono hidden sm:inline" style={{ fontSize: "0.55rem", color: "var(--amber)", letterSpacing: "0.06em" }}>
+            חדשות ישראל והמזרח התיכון
           </span>
         </Link>
         <nav style={{ display: "flex", gap: 24 }}>
-          <Link href="/" style={{ fontFamily: "Outfit, sans-serif", fontSize: "0.7rem", fontWeight: 500, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--text-2)", textDecoration: "none" }}>Feed</Link>
-          <Link href="/sources" style={{ fontFamily: "Outfit, sans-serif", fontSize: "0.7rem", fontWeight: 500, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--text-2)", textDecoration: "none" }}>Sources</Link>
+          <Link href="/" style={{ fontFamily: "Outfit, sans-serif", fontSize: "0.8rem", fontWeight: 500, color: "var(--text-2)", textDecoration: "none" }}>עדכון</Link>
+          <Link href="/sources" style={{ fontFamily: "Outfit, sans-serif", fontSize: "0.8rem", fontWeight: 500, color: "var(--text-2)", textDecoration: "none" }}>מקורות</Link>
         </nav>
       </div>
     </header>
