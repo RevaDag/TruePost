@@ -2,6 +2,7 @@ import { getStories } from "@/lib/supabase";
 import { StoryCard } from "@/components/StoryCard";
 import { ConsensusBadge } from "@/components/ConsensusBadge";
 import { SourceBadge } from "@/components/SourceBadge";
+import { CrawlButton } from "@/components/CrawlButton";
 import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
 import type { Story } from "@/lib/types";
@@ -82,11 +83,7 @@ export default async function HomePage() {
           <p style={{ fontFamily: "Outfit, sans-serif", fontSize: "0.85rem", color: "var(--text-3)", maxWidth: "28rem" }}>
             Trigger the first crawl to start collecting articles from all sources.
           </p>
-          <a href="/api/cron/crawl" style={{ fontFamily: "Outfit, sans-serif", fontSize: "0.7rem", fontWeight: 500,
-            letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--amber)",
-            border: "1px solid var(--amber)", borderRadius: 2, padding: "6px 16px", textDecoration: "none" }}>
-            Run First Crawl
-          </a>
+          <CrawlButton />
         </div>
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
